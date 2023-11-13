@@ -143,15 +143,6 @@ public enum TokenType {
         break;
       }
 
-      if (c == 's') {
-        // Escaped s character, substitute for single quote
-        if (previous != null && previous == '\\' && (previousPrevious == null || previousPrevious != '\\')) {
-          result.deleteCharAt(result.length() - 1);
-          result.append('\'');
-          continue;
-        }
-      }
-
       result.append(c);
     }
 
