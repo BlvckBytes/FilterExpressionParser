@@ -26,7 +26,7 @@ package me.blvckbytes.filterexpressionparser.parser.expression;
 
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
-public class LongExpression extends AExpression {
+public class LongExpression extends TerminalExpression<Long> {
 
   private final long number;
 

@@ -27,7 +27,7 @@ package me.blvckbytes.filterexpressionparser.parser.expression;
 import me.blvckbytes.filterexpressionparser.parser.LiteralType;
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
-public class LiteralExpression extends AExpression {
+public class LiteralExpression extends TerminalExpression<LiteralType> {
 
   private final LiteralType type;
 
@@ -36,7 +36,7 @@ public class LiteralExpression extends AExpression {
     this.type = type;
   }
 
-  public LiteralType getType() {
+  public LiteralType getValue() {
     return type;
   }
 

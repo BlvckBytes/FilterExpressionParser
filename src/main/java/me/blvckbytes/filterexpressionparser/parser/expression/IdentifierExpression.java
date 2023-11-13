@@ -26,7 +26,7 @@ package me.blvckbytes.filterexpressionparser.parser.expression;
 
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
-public class IdentifierExpression extends AExpression {
+public class IdentifierExpression extends TerminalExpression<String> {
 
   private final String symbol;
 
@@ -36,7 +36,7 @@ public class IdentifierExpression extends AExpression {
     this.symbol = symbol;
   }
 
-  public String getSymbol() {
+  public String getValue() {
     return symbol;
   }
 

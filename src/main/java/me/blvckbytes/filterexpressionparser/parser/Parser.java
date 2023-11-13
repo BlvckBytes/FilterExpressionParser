@@ -153,7 +153,7 @@ public class Parser {
         throw new IllegalStateException();
     }
 
-    AExpression valueExpression = parseTerminalExpression(tokenizer);
+    TerminalExpression<?> valueExpression = parseTerminalExpression(tokenizer);
 
     return new ComparisonExpression(
       identifierExpression,
@@ -165,7 +165,7 @@ public class Parser {
     );
   }
 
-  private AExpression parseTerminalExpression(ITokenizer tokenizer) throws AEvaluatorError {
+  private TerminalExpression<?> parseTerminalExpression(ITokenizer tokenizer) throws AEvaluatorError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a primary expression");
 
     Token tk = tokenizer.consumeToken();

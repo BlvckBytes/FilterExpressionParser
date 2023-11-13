@@ -26,7 +26,7 @@ package me.blvckbytes.filterexpressionparser.parser.expression;
 
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
-public class DoubleExpression extends AExpression {
+public class DoubleExpression extends TerminalExpression<Double> {
 
   private final Double value;
 
