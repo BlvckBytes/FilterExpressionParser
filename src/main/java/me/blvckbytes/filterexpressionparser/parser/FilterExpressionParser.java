@@ -36,12 +36,12 @@ import me.blvckbytes.filterexpressionparser.tokenizer.TokenType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Parser {
+public class FilterExpressionParser {
 
   private final Logger logger;
   private final FExpressionParser[] precedenceLadder;
 
-  public Parser(Logger logger) {
+  public FilterExpressionParser(Logger logger) {
     this.logger = logger;
 
     this.precedenceLadder = new FExpressionParser[] {

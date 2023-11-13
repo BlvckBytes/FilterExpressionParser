@@ -33,7 +33,7 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Tokenizer implements ITokenizer {
+public class FilterExpressionTokenizer implements ITokenizer {
 
   private final String rawText;
   private final Logger logger;
@@ -41,7 +41,7 @@ public class Tokenizer implements ITokenizer {
   private final Stack<TokenizerState> saveStates;
   private TokenizerState state;
 
-  public Tokenizer(Logger logger, String text) {
+  public FilterExpressionTokenizer(Logger logger, String text) {
     this.rawText = text;
     this.logger = logger;
     this.text = text.toCharArray();

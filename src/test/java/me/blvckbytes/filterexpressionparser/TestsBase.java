@@ -2,19 +2,19 @@ package me.blvckbytes.filterexpressionparser;
 
 import me.blvckbytes.filterexpressionparser.parser.ComparisonOperator;
 import me.blvckbytes.filterexpressionparser.parser.LiteralType;
-import me.blvckbytes.filterexpressionparser.parser.Parser;
+import me.blvckbytes.filterexpressionparser.parser.FilterExpressionParser;
 import me.blvckbytes.filterexpressionparser.parser.expression.*;
-import me.blvckbytes.filterexpressionparser.tokenizer.Tokenizer;
+import me.blvckbytes.filterexpressionparser.tokenizer.FilterExpressionTokenizer;
 
 import java.util.logging.Logger;
 
 public abstract class TestsBase {
 
   private static final Logger LOGGER = Logger.getGlobal();
-  private static final Parser PARSER = new Parser(LOGGER);
+  private static final FilterExpressionParser PARSER = new FilterExpressionParser(LOGGER);
 
   public void validate(String input, ABinaryFilterExpression<?, ?> expectedExpression) {
-    compareExpressions(PARSER.parse(new Tokenizer(LOGGER, input)), expectedExpression);
+    compareExpressions(PARSER.parse(new FilterExpressionTokenizer(LOGGER, input)), expectedExpression);
   }
 
   private void compareExpressions(AExpression actual, AExpression expected) {

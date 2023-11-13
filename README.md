@@ -45,11 +45,11 @@ Logger logger = Logger.getGlobal();
 String input = "...";
 
 // The parser is to be treated as a singleton and can be reused
-Parser parser = new Parser(logger);
+FilterExpressionParser parser = new FilterExpressionParser(logger);
 
 // For each input value, a new tokenizer must be instantiated
-Tokenizer tokenizer = new Tokenizer(logger, input);
-ABinaryExpression<?, ?> expression = parser.parse(tokenizer);
+FilterExpressionTokenizer tokenizer = new FilterExpressionTokenizer(logger, input);
+ABinaryFilterExpression<?, ?> expression = parser.parse(tokenizer);
 ```
 
 The `expression` can now be one of the following types:
