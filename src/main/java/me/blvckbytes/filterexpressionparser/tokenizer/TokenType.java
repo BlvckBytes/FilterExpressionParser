@@ -192,6 +192,7 @@ public enum TokenType {
   public static final TokenType[] valuesInTrialOrder;
   public static final TokenType[] nonNumericTypes;
   public static final TokenType[] valueTypes;
+  public static final TokenType[] operatorTypes;
 
   static {
     valuesInTrialOrder =
@@ -205,6 +206,10 @@ public enum TokenType {
 
     valueTypes = Arrays.stream(values())
       .filter(type -> type.getCategory() == TokenCategory.VALUE)
+      .toArray(TokenType[]::new);
+
+    operatorTypes = Arrays.stream(values())
+      .filter(type -> type.getCategory() == TokenCategory.OPERATOR)
       .toArray(TokenType[]::new);
   }
 
