@@ -35,11 +35,6 @@ public class ConjunctionExpression extends ABinaryExpression {
   }
 
   @Override
-  public boolean canBeCombinedToOptimize(ABinaryExpression other) {
-    return other instanceof ConjunctionExpression;
-  }
-
-  @Override
   protected @Nullable String getInfixSymbol() {
     return TokenType.BOOL_AND.getRepresentation();
   }

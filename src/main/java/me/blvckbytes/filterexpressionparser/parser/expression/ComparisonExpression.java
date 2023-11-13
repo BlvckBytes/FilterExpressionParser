@@ -43,13 +43,6 @@ public class ComparisonExpression extends ABinaryExpression {
   }
 
   @Override
-  public boolean canBeCombinedToOptimize(ABinaryExpression other) {
-    if (other instanceof ComparisonExpression)
-      return ((ComparisonExpression) other).getOperation().equals(operation);
-    return false;
-  }
-
-  @Override
   protected @Nullable String getInfixSymbol() {
     switch (operation) {
       case EQUAL:
