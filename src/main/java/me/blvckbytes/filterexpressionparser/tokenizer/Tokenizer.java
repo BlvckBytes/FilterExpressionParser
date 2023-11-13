@@ -143,8 +143,6 @@ public class Tokenizer implements ITokenizer {
 
   @Override
   public @Nullable Token consumeToken() throws AEvaluatorError {
-    state.previousToken = state.currentToken;
-
     if (state.currentToken == null)
       readNextToken();
 
@@ -154,11 +152,6 @@ public class Tokenizer implements ITokenizer {
     logger.log(Level.FINEST, () -> DebugLogSource.TOKENIZER + "Consumed token " + result);
 
     return result;
-  }
-
-  @Override
-  public @Nullable Token previousToken() throws AEvaluatorError {
-    return state.previousToken;
   }
 
   @Override

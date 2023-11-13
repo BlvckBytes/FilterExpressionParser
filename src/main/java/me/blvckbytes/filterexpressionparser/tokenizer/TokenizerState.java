@@ -32,7 +32,7 @@ public class TokenizerState {
 
   public int row, col, charIndex;
   public Stack<Integer> colStack;
-  public @Nullable Token currentToken, previousToken;
+  public @Nullable Token currentToken;
 
   public TokenizerState() {
     this.colStack = new Stack<>();
@@ -46,7 +46,6 @@ public class TokenizerState {
     copy.charIndex = this.charIndex;
     copy.colStack = this.colStack;
     copy.currentToken = this.currentToken;
-    copy.previousToken = this.previousToken;
 
     return copy;
   }
