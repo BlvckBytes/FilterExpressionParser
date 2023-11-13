@@ -24,7 +24,7 @@
 
 package me.blvckbytes.filterexpressionparser.error;
 
-public class NegativeExponentOnLongError extends AEvaluatorError {
+public class NegativeExponentOnLongError extends AParserError {
 
   public NegativeExponentOnLongError(int row, int col, String rawInput) {
     super(row, col, rawInput, "A negative exponent is not allowed on a long, please use a double instead!");

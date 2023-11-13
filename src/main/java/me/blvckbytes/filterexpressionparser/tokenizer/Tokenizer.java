@@ -25,7 +25,7 @@
 package me.blvckbytes.filterexpressionparser.tokenizer;
 
 import me.blvckbytes.filterexpressionparser.logging.DebugLogSource;
-import me.blvckbytes.filterexpressionparser.error.AEvaluatorError;
+import me.blvckbytes.filterexpressionparser.error.AParserError;
 import me.blvckbytes.filterexpressionparser.error.UnknownTokenError;
 import org.jetbrains.annotations.Nullable;
 
@@ -132,7 +132,7 @@ public class Tokenizer implements ITokenizer {
   }
 
   @Override
-  public @Nullable Token peekToken() throws AEvaluatorError {
+  public @Nullable Token peekToken() throws AParserError {
     if (state.currentToken == null)
       readNextToken();
 
@@ -142,7 +142,7 @@ public class Tokenizer implements ITokenizer {
   }
 
   @Override
-  public @Nullable Token consumeToken() throws AEvaluatorError {
+  public @Nullable Token consumeToken() throws AParserError {
     if (state.currentToken == null)
       readNextToken();
 
@@ -185,7 +185,7 @@ public class Tokenizer implements ITokenizer {
   /**
    * Reads the next token or null if nothing is available into the local state
    */
-  private void readNextToken() throws AEvaluatorError {
+  private void readNextToken() throws AParserError {
     eatWhitespace();
 
     // EOF reached

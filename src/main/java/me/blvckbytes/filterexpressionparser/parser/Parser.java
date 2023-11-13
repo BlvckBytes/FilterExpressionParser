@@ -25,7 +25,7 @@
 package me.blvckbytes.filterexpressionparser.parser;
 
 import me.blvckbytes.filterexpressionparser.logging.DebugLogSource;
-import me.blvckbytes.filterexpressionparser.error.AEvaluatorError;
+import me.blvckbytes.filterexpressionparser.error.AParserError;
 import me.blvckbytes.filterexpressionparser.error.UnexpectedTokenError;
 import me.blvckbytes.filterexpressionparser.parser.expression.*;
 import me.blvckbytes.filterexpressionparser.tokenizer.ITokenizer;
@@ -52,7 +52,7 @@ public class Parser {
     };
   }
 
-  public ABinaryExpression<?, ?> parse(ITokenizer tokenizer) throws AEvaluatorError {
+  public ABinaryExpression<?, ?> parse(ITokenizer tokenizer) throws AParserError {
     return invokeLowestPrecedenceParser(tokenizer);
   }
 
@@ -62,7 +62,7 @@ public class Parser {
 
   /////////////////////// Unary Expressions ///////////////////////
 
-  private ABinaryExpression<?, ?> parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a parenthesis expression");
 
     Token tk = tokenizer.peekToken();
@@ -88,14 +88,14 @@ public class Parser {
 
   /////////////////////// Binary Expressions ///////////////////////
 
-  private ABinaryExpression<?, ?> parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new DisjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_OR
     );
   }
 
-  private ABinaryExpression<?, ?> parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new ConjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_AND
@@ -104,7 +104,7 @@ public class Parser {
 
   //////////////////////// Primary Expression ////////////////////////
 
-  private ComparisonExpression parseComparisonExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ComparisonExpression parseComparisonExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     Token identifierToken = tokenizer.consumeToken();
 
     if (identifierToken == null || identifierToken.getType() != TokenType.IDENTIFIER)
@@ -165,7 +165,7 @@ public class Parser {
     );
   }
 
-  private TerminalExpression<?> parseTerminalExpression(ITokenizer tokenizer) throws AEvaluatorError {
+  private TerminalExpression<?> parseTerminalExpression(ITokenizer tokenizer) throws AParserError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a primary expression");
 
     Token tk = tokenizer.consumeToken();
@@ -212,18 +212,18 @@ public class Parser {
   //                                Utilities                                //
   //=========================================================================//
 
-  private ABinaryExpression<?, ?> invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AParserError {
     return precedenceLadder[0].apply(tokenizer, 0);
   }
 
-  private ABinaryExpression<?, ?> invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return precedenceLadder[precedenceSelf + 1].apply(tokenizer, precedenceSelf + 1);
   }
 
   private ABinaryExpression<?, ?> parseBinaryExpression(
     FBinaryExpressionWrapper wrapper, ITokenizer tokenizer,
     int precedenceSelf, TokenType operator
-  ) throws AEvaluatorError {
+  ) throws AParserError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a binary expression for the operator " + operator);
 
     ABinaryExpression<?, ?> lhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);

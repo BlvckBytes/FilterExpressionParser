@@ -24,7 +24,7 @@
 
 package me.blvckbytes.filterexpressionparser.tokenizer;
 
-import me.blvckbytes.filterexpressionparser.error.AEvaluatorError;
+import me.blvckbytes.filterexpressionparser.error.AParserError;
 import org.jetbrains.annotations.Nullable;
 
 public interface ITokenizer {
@@ -45,9 +45,9 @@ public interface ITokenizer {
 
   TokenizerState discardState(boolean debugLog);
 
-  @Nullable Token peekToken() throws AEvaluatorError;
+  @Nullable Token peekToken() throws AParserError;
 
-  @Nullable Token consumeToken() throws AEvaluatorError;
+  @Nullable Token consumeToken() throws AParserError;
 
   int getCurrentRow();
 

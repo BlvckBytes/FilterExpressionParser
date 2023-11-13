@@ -26,9 +26,9 @@ package me.blvckbytes.filterexpressionparser.error;
 
 import java.util.Collections;
 
-public abstract class AEvaluatorError extends RuntimeException {
+public abstract class AParserError extends RuntimeException {
 
-  public AEvaluatorError(int row, int col, String rawInput, String text) {
+  public AParserError(int row, int col, String rawInput, String text) {
     super("\n" + generateWarning(row, col, rawInput, text));
   }
 

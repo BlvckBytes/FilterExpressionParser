@@ -24,10 +24,10 @@
 
 package me.blvckbytes.filterexpressionparser.tokenizer;
 
-import me.blvckbytes.filterexpressionparser.error.AEvaluatorError;
+import me.blvckbytes.filterexpressionparser.error.AParserError;
 
 @FunctionalInterface
 public interface FTokenReader {
 
-  String apply(ITokenizer tokenizer) throws AEvaluatorError;
+  String apply(ITokenizer tokenizer) throws AParserError;
 }

@@ -24,7 +24,7 @@
 
 package me.blvckbytes.filterexpressionparser.error;
 
-public class UnknownTokenError extends AEvaluatorError {
+public class UnknownTokenError extends AParserError {
 
   public UnknownTokenError(int row, int col, String rawInput) {
     super(row, col, rawInput, "Unknown token encountered");
