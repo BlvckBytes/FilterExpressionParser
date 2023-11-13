@@ -3,39 +3,31 @@ Letter ::= [A-Za-z]
 
 Long ::= "-"? Digit+ ("e" Digit+)?
 Double ::= "-"? Digit* "." Digit+ ("e" "-"? Digit+)?
-String ::= '"' ('\"' | [^"] | "\s")* '"'
-Identifier ::= Letter (Digit | Letter | '_')*
 Literal ::= "true" | "false" | "null"
 
-AdditiveOperator ::= "+" | "-"
-MultiplicativeOperator ::= "*" | "/" | "%"
-EqualityOperator ::= "==" | "!=" | "===" | "!=="
-ComparisonOperator ::= ">" | "<" | ">=" | "<="
+# Quotes within string literals need to be escaped
+String ::= '"' ('\"' | [^"])* '"'
 
-NullCoalesceExpression ::= ConcatenationExpression ("??" ConcatenationExpression)*
-ConcatenationExpression ::= DisjunctionExpression ("&" DisjunctionExpression)*
+# Identifiers represent fields to be filtered by
+Identifier ::= Letter (Digit | Letter | '_')*
+
+Value := Long
+       | Double
+       | String
+       | Literal
+       | Identifier # Fields can be matched on other fields within
+                    # the same object as well, not just static values
+
+ComparisonOperator ::= ">"  # Greater than
+                     | "<"  # Less than
+                     | ">=" # Greater than or equal
+                     | "<=" # Less than or equal
+                     | "==" # Equals
+                     | "!=" # Not Equals
+                     | "%"  # Regex match
+
 DisjunctionExpression ::= ConjunctionExpression ("or" ConjunctionExpression)*
-ConjunctionExpression ::= EqualityExpression ("and" EqualityExpression)*
-EqualityExpression ::= ComparisonExpression (EqualityOperator ComparisonExpression)*
-ComparisonExpression ::= AdditiveExpression (ComparisonOperator AdditiveExpression)*
-AdditiveExpression ::= MultiplicativeExpression (AdditiveOperator MultiplicativeExpression)*
-MultiplicativeExpression ::= ExponentiationExpression (MultiplicativeOperator ExponentiationExpression)*
-ExponentiationExpression ::= NegationExpression ("^" NegationExpression)*
-
-NegationExpression ::= FlipSignExpression ("-" FlipSignExpression)?
-FlipSignExpression ::= IndexExpression ("not" IndexExpression)?
-
-IndexExpression ::= MemberAccessExpression (("[" | "?[") Expression "]")*
-MemberAccessExpression ::= FunctionInvocationExpression (("." | "?.") FunctionInvocationExpression)*
-
-FunctionArgument ::= (Identifier "=")? Expression
-FunctionInvocationExpression ::= (Identifier ("(" | "?(") (FunctionArgument | (FunctionArgument ("," FunctionArgument)*))? ")") | IfThenElseExpression
-
-IfThenElseExpression ::= ("if" Expression "then" Expression "else" Expression) | CallbackExpression
-CallbackExpression ::= ("(" (Identifier | (Identifier ("," Identifier)*)) ")" "=>" Expression) | ParenthesesExpression
-ParenthesesExpression ::= ("(" Expression ")") | PrimaryExpression
-
-PrimaryExpression ::= Long | Double | String | Identifier | Literal
-
-Expression ::= NullCoalesceExpression
-ProgramExpression ::= Expression+
+ConjunctionExpression ::= ParenthesesExpression ("and" ParenthesesExpression)*
+ParenthesesExpression ::= ("(" FilterExpression ")") | ComparisonExpression
+ComparisonExpression ::= Identifier ComparisonOperator Value
+FilterExpression ::= DisjunctionExpression

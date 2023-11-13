@@ -4,10 +4,7 @@
 
 This project is a "fork" of [GPEEE](https://github.com/BlvckBytes/GPEEE), which reduced and adapted it's features to serve as a parser for filter expressions.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Usage](#usage)
-- [Grammar](#grammar)
+<!-- #toc -->
 
 ## Introduction
 
@@ -61,44 +58,6 @@ If only a single `ComparisonExpression` has been defined in the input string, th
 
 ## Grammar
 
-<details>
-<summary>grammar.ebnf</summary>
+<!-- #include src/main/resources/grammar.ebnf -->
 
-```ebnf
-Digit ::= [0-9]
-Letter ::= [A-Za-z]
-
-Long ::= "-"? Digit+ ("e" Digit+)?
-Double ::= "-"? Digit* "." Digit+ ("e" "-"? Digit+)?
-Literal ::= "true" | "false" | "null"
-
-# Quotes within string literals need to be escaped
-String ::= '"' ('\"' | [^"])* '"'
-
-# Identifiers represent fields to be filtered by
-Identifier ::= Letter (Digit | Letter | '_')*
-
-Value := Long
-       | Double
-       | String
-       | Literal
-       | Identifier # Fields can be matched on other fields within
-                    # the same object as well, not just static values
-
-ComparisonOperator ::= ">"  # Greater than
-                     | "<"  # Less than
-                     | ">=" # Greater than or equal
-                     | "<=" # Less than or equal
-                     | "==" # Equals
-                     | "!=" # Not Equals
-                     | "%"  # Regex match
-
-DisjunctionExpression ::= ConjunctionExpression ("or" ConjunctionExpression)*
-ConjunctionExpression ::= ParenthesesExpression ("and" ParenthesesExpression)*
-ParenthesesExpression ::= ("(" FilterExpression ")") | ComparisonExpression
-ComparisonExpression ::= Identifier ComparisonOperator Value
-FilterExpression ::= DisjunctionExpression
-```
-</details>
-
-
+<!-- #configure include WRAP_IN_COLLAPSIBLE true -->
