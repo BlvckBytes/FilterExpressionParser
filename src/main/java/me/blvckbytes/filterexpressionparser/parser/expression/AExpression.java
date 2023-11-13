@@ -24,7 +24,6 @@
 
 package me.blvckbytes.filterexpressionparser.parser.expression;
 
-import me.blvckbytes.filterexpressionparser.Tuple;
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 import org.jetbrains.annotations.Nullable;
 
@@ -127,14 +126,6 @@ public abstract class AExpression {
 
       listBuilder.append(indent).append(indentWidth).append("]");
       return listBuilder.toString();
-    }
-
-    if (object instanceof Tuple) {
-      Tuple<?, ?> tuple = (Tuple<?, ?>) object;
-      return (
-        "Tuple(a=" + stringifyObject(tuple.a, indent, indentWidth, indentLevel - 1) +
-        ", b=" + stringifyObject(tuple.b, indent, indentWidth, indentLevel - 1) + ")"
-      );
     }
 
     return object.toString();
