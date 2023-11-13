@@ -41,7 +41,4 @@ public enum TokenCategory {
   // Operators and symbols share the same importance, as
   // they should never collide by design
   OPERATOR, SYMBOL,
-
-  // Invisible tokens are not of interest to the AST
-  INVISIBLE
 }

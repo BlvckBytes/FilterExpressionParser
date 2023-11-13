@@ -209,21 +209,6 @@ public enum TokenType {
   OPTIONAL_BRACKET_OPEN(TokenCategory.SYMBOL, "?[", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?', '[')),
   BRACKET_CLOSE(TokenCategory.SYMBOL, "]", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, ']')),
 
-  //=========================================================================//
-  //                                Invisible                                //
-  //=========================================================================//
-
-  COMMENT(TokenCategory.INVISIBLE, null, tokenizer -> {
-    StringBuilder result = new StringBuilder();
-
-    if (tokenizer.nextChar() != '#')
-      return null;
-
-    while (tokenizer.hasNextChar() && tokenizer.peekNextChar() != '\n')
-      result.append(tokenizer.nextChar());
-
-    return result.toString();
-  }),
   ;
 
   private final TokenCategory category;

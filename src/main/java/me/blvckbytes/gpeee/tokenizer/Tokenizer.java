@@ -201,27 +201,6 @@ public class Tokenizer implements ITokenizer {
       return;
     }
 
-    // Save state before letting TokenType COMMENT operate
-    saveState(false);
-
-    // Try to eat a following comment
-    String comment;
-    if ((comment = TokenType.COMMENT.getTokenReader().apply(this)) != null) {
-      logger.log(Level.FINEST, () -> DebugLogSource.TOKENIZER + "Ate comment: " + comment);
-
-      // No longer needing to revert
-      discardState(false);
-
-      // Successfully ate the comment, try to eat more whitespace/comments
-      // before actually reading any other tokens
-      readNextToken();
-      return;
-    }
-
-    // Comment reader wasn't successful, restore state again
-    else
-      restoreState(false);
-
     for (TokenType tryType : TokenType.valuesInTrialOrder) {
       FTokenReader reader = tryType.getTokenReader();
 
