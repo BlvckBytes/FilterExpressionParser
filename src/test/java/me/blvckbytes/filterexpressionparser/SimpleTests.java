@@ -79,10 +79,10 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleParenthesesAndMinification() {
     validate(
-      "(name==\"User\"||age>=50)&&(color==\"green\"||height!=weight)",
+      "(name%%\"User\"||age>=50)&&(color==\"green\"||height!=weight)",
       conjunction(
         disjunction(
-          comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
+          comparison("name", ComparisonOperator.CONTAINS_FUZZY, stringValue("User")),
           comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
         ),
         disjunction(

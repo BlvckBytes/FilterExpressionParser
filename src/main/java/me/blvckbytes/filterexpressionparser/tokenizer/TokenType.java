@@ -169,13 +169,14 @@ public enum TokenType {
   GREATER_THAN_OR_EQUAL(TokenCategory.OPERATOR, ">=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '>', '=')),
   LESS_THAN(TokenCategory.OPERATOR, "<", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '<')),
   LESS_THAN_OR_EQUAL(TokenCategory.OPERATOR, "<=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '<', '=')),
-  VALUE_EQUALS(TokenCategory.OPERATOR, "==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '=', '=')),
-  VALUE_NOT_EQUALS(TokenCategory.OPERATOR, "!=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '!', '=')),
+  VALUE_EQUALS(TokenCategory.OPERATOR, "==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "==".toCharArray())),
+  VALUE_NOT_EQUALS(TokenCategory.OPERATOR, "!=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "!=".toCharArray())),
 
   // While the reserved keyword "regex" would "look nicer", having a symbol that does not restrict
   // the identifier values is to be preferred, as fields like "regex" could actually be quite common
   REGEX_MATCHER(TokenCategory.OPERATOR, "?", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?')),
-  CONTAINS(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '%')),
+  CONTAINS_EXACT(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '%', '%')),
+  CONTAINS_FUZZY(TokenCategory.OPERATOR, "%%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "%%".toCharArray())),
 
   BOOL_OR(TokenCategory.KEYWORD, "||", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "||".toCharArray())),
   BOOL_AND(TokenCategory.KEYWORD, "&&", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "&&".toCharArray())),

@@ -133,8 +133,12 @@ public class FilterExpressionParser {
         operator = ComparisonOperator.REGEX_MATCHER;
         break;
 
-      case CONTAINS:
-        operator = ComparisonOperator.CONTAINS;
+      case CONTAINS_EXACT:
+        operator = ComparisonOperator.CONTAINS_EXACT;
+        break;
+
+      case CONTAINS_FUZZY:
+        operator = ComparisonOperator.CONTAINS_FUZZY;
         break;
 
       case GREATER_THAN:
