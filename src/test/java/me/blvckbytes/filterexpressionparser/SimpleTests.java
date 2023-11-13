@@ -40,7 +40,7 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldParseConjunction() {
     validate(
-      "name == \"User\" and age <= 50",
+      "name == \"User\" && age <= 50",
       conjunction(
         comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
         comparison("age", ComparisonOperator.LESS_THAN_OR_EQUAL, longValue(50))
@@ -51,7 +51,7 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldParseDisjunction() {
     validate(
-      "name == \"User\" or age >= 50",
+      "name == \"User\" || age >= 50",
       disjunction(
         comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
         comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
@@ -62,7 +62,7 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleJunctionPrecedence() {
     validate(
-      "name == \"User\" or age >= 50 and color == \"green\" or height != weight",
+      "name == \"User\" || age >= 50 && color == \"green\" || height != weight",
       disjunction(
         disjunction(
           comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
@@ -79,7 +79,7 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleParenthesesAndMinification() {
     validate(
-      "(name==\"User\"or age>=50)and(color==\"green\"or height!=weight)",
+      "(name==\"User\"||age>=50)&&(color==\"green\"||height!=weight)",
       conjunction(
         disjunction(
           comparison("name", ComparisonOperator.EQUAL, stringValue("User")),

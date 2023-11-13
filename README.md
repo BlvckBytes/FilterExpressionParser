@@ -27,11 +27,11 @@ Now it is at least clear that one of the color comparisons and one of the price 
 
 As one quickly notices, this system would work fine, but (since the user has to manage groups now) introduces a lot of variance. While it may not be that strong of an argument, readability also suffers tremendously from this notation. Let's express the above filtration by making use of this project's grammar:
 
-`(color == "purple" and price < 5) or (color == "gold" and price < 10)`
+`(color == "purple" && price < 5) || (color == "gold" && price < 10)`
 
-Not only will there be less used characters in total, but the readability also skyrocketed. Since `and` has greater precedence than `or`, this example doesn't need parentheses. It can also still be partially minified (one space after each junction is required to distinguish identifiers from the junction):
+Not only will there be less used characters in total, but the readability also skyrocketed. Since `&&` has greater precedence than `||`, this example doesn't need parentheses. It can also still be minified:
 
-`color=="purple"and price<5or color=="gold"and price<10`
+`color=="purple"&&price<5||color=="gold"&&price<10`
 
 This parser adds a few dozens of **micro**-seconds to the request processing duration and is thus
 a compromise who's necessity is to be decided by nobody but the reader, of course.
@@ -94,8 +94,8 @@ ComparisonOperator ::= ">"  # Greater than
                      | "?"  # Regex match
                      | "%"  # Contains
 
-DisjunctionExpression ::= ConjunctionExpression ("or" ConjunctionExpression)*
-ConjunctionExpression ::= ParenthesesExpression ("and" ParenthesesExpression)*
+DisjunctionExpression ::= ConjunctionExpression ("||" ConjunctionExpression)*
+ConjunctionExpression ::= ParenthesesExpression ("&&" ParenthesesExpression)*
 ParenthesesExpression ::= ("(" FilterExpression ")") | ComparisonExpression
 ComparisonExpression ::= Identifier ComparisonOperator Value
 FilterExpression ::= DisjunctionExpression

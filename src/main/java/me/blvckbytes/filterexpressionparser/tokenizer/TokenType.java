@@ -177,8 +177,8 @@ public enum TokenType {
   REGEX_MATCHER(TokenCategory.OPERATOR, "?", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?')),
   CONTAINS(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '%')),
 
-  BOOL_OR(TokenCategory.KEYWORD, "or", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "or".toCharArray())),
-  BOOL_AND(TokenCategory.KEYWORD, "and", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "and".toCharArray())),
+  BOOL_OR(TokenCategory.KEYWORD, "||", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "||".toCharArray())),
+  BOOL_AND(TokenCategory.KEYWORD, "&&", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "&&".toCharArray())),
 
   //=========================================================================//
   //                                 Symbols                                 //

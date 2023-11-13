@@ -27,8 +27,8 @@ ComparisonOperator ::= ">"  # Greater than
                      | "?"  # Regex match
                      | "%"  # Contains
 
-DisjunctionExpression ::= ConjunctionExpression ("or" ConjunctionExpression)*
-ConjunctionExpression ::= ParenthesesExpression ("and" ParenthesesExpression)*
+DisjunctionExpression ::= ConjunctionExpression ("||" ConjunctionExpression)*
+ConjunctionExpression ::= ParenthesesExpression ("&&" ParenthesesExpression)*
 ParenthesesExpression ::= ("(" FilterExpression ")") | ComparisonExpression
 ComparisonExpression ::= Identifier ComparisonOperator Value
 FilterExpression ::= DisjunctionExpression
