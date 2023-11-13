@@ -91,7 +91,8 @@ ComparisonOperator ::= ">"  # Greater than
                      | "<=" # Less than or equal
                      | "==" # Equals
                      | "!=" # Not Equals
-                     | "%"  # Regex match
+                     | "?"  # Regex match
+                     | "%"  # Contains
 
 DisjunctionExpression ::= ConjunctionExpression ("or" ConjunctionExpression)*
 ConjunctionExpression ::= ParenthesesExpression ("and" ParenthesesExpression)*

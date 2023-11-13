@@ -133,6 +133,10 @@ public class Parser {
         operator = ComparisonOperator.REGEX_MATCHER;
         break;
 
+      case CONTAINS:
+        operator = ComparisonOperator.CONTAINS;
+        break;
+
       case GREATER_THAN:
         operator = ComparisonOperator.GREATER_THAN;
         break;

@@ -51,6 +51,8 @@ public class ComparisonExpression extends ABinaryExpression<IdentifierExpression
         return TokenType.VALUE_NOT_EQUALS.getRepresentation();
       case REGEX_MATCHER:
         return TokenType.REGEX_MATCHER.getRepresentation();
+      case CONTAINS:
+        return TokenType.CONTAINS.getRepresentation();
       case LESS_THAN:
         return TokenType.LESS_THAN.getRepresentation();
       case GREATER_THAN:

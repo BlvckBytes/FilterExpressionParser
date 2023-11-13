@@ -29,6 +29,7 @@ public enum ComparisonOperator {
   EQUAL,
   NOT_EQUAL,
   REGEX_MATCHER,
+  CONTAINS,
   GREATER_THAN,
   GREATER_THAN_OR_EQUAL,
   LESS_THAN,
