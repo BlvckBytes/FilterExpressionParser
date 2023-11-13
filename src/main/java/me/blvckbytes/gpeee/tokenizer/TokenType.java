@@ -68,6 +68,10 @@ public enum TokenType {
   LONG(TokenCategory.VALUE, null, tokenizer -> {
     StringBuilder result = new StringBuilder();
 
+    // Negative number
+    if (tokenizer.hasNextChar() && tokenizer.peekNextChar() == '-')
+      result.append(tokenizer.nextChar());
+
     if (collectDigits(tokenizer, result, false) != CollectorResult.READ_OKAY)
       return null;
 
@@ -80,8 +84,12 @@ public enum TokenType {
   DOUBLE(TokenCategory.VALUE, null, tokenizer -> {
     StringBuilder result = new StringBuilder();
 
+    // Negative number
+    if (tokenizer.hasNextChar() && tokenizer.peekNextChar() == '-')
+      result.append(tokenizer.nextChar());
+
     // Shorthand 0.x notation
-    if (tokenizer.peekNextChar() == '.') {
+    if (tokenizer.hasNextChar() && tokenizer.peekNextChar() == '.') {
       result.append('0');
       result.append(tokenizer.nextChar());
 
