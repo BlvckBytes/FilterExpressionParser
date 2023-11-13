@@ -76,7 +76,7 @@ Literal ::= "true" | "false" | "null"
 String ::= '"' ('\"' | [^"])* '"'
 
 # Identifiers represent fields to be filtered by
-Identifier ::= Letter (Digit | Letter | '_')*
+Identifier ::= Letter (Digit | Letter | '_' | '.')*
 
 Value := Long
        | Double

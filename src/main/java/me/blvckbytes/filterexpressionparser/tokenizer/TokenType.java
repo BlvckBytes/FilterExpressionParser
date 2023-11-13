@@ -388,7 +388,7 @@ public enum TokenType {
       (c >= 'a' && c <= 'z') ||
       (c >= 'A' && c <= 'Z') ||
       // Underscores as well as numbers aren't allowed as the first character
-      (!isFirst && (c == '_' || isDigit(c)))
+      (!isFirst && (c == '.' || c == '_' || isDigit(c)))
     );
   }
 
