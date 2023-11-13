@@ -38,7 +38,7 @@ public class ComparisonExpression extends ABinaryExpression<IdentifierExpression
     this.operation = operation;
   }
 
-  public ComparisonOperator getOperation() {
+  public ComparisonOperator getOperator() {
     return operation;
   }
 
