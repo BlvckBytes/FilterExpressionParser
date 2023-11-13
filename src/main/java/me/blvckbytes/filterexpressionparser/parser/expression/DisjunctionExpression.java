@@ -28,9 +28,9 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 import me.blvckbytes.filterexpressionparser.tokenizer.TokenType;
 import org.jetbrains.annotations.Nullable;
 
-public class DisjunctionExpression extends ABinaryExpression<ABinaryExpression<?, ?>, ABinaryExpression<?, ?>> {
+public class DisjunctionExpression extends ABinaryFilterExpression<ABinaryFilterExpression<?, ?>, ABinaryFilterExpression<?, ?>> {
 
-  public DisjunctionExpression(ABinaryExpression<?, ?> lhs, ABinaryExpression<?, ?> rhs, Token head, Token tail, String fullContainingExpression) {
+  public DisjunctionExpression(ABinaryFilterExpression<?, ?> lhs, ABinaryFilterExpression<?, ?> rhs, Token head, Token tail, String fullContainingExpression) {
     super(lhs, rhs, head, tail, fullContainingExpression);
   }
 

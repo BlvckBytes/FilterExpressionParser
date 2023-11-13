@@ -52,7 +52,7 @@ public class Parser {
     };
   }
 
-  public ABinaryExpression<?, ?> parse(ITokenizer tokenizer) throws AParserError {
+  public ABinaryFilterExpression<?, ?> parse(ITokenizer tokenizer) throws AParserError {
     return invokeLowestPrecedenceParser(tokenizer);
   }
 
@@ -62,7 +62,7 @@ public class Parser {
 
   /////////////////////// Unary Expressions ///////////////////////
 
-  private ABinaryExpression<?, ?> parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
+  private ABinaryFilterExpression<?, ?> parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a parenthesis expression");
 
     Token tk = tokenizer.peekToken();
@@ -77,7 +77,7 @@ public class Parser {
 
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse the content of the parenthesis expression");
 
-    ABinaryExpression<?, ?> content = invokeLowestPrecedenceParser(tokenizer);
+    ABinaryFilterExpression<?, ?> content = invokeLowestPrecedenceParser(tokenizer);
 
     // Parenthesis has to be closed again
     if ((tk = tokenizer.consumeToken()) == null || tk.getType() != TokenType.PARENTHESIS_CLOSE)
@@ -88,14 +88,14 @@ public class Parser {
 
   /////////////////////// Binary Expressions ///////////////////////
 
-  private ABinaryExpression<?, ?> parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
+  private ABinaryFilterExpression<?, ?> parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new DisjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_OR
     );
   }
 
-  private ABinaryExpression<?, ?> parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
+  private ABinaryFilterExpression<?, ?> parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new ConjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_AND
@@ -216,21 +216,21 @@ public class Parser {
   //                                Utilities                                //
   //=========================================================================//
 
-  private ABinaryExpression<?, ?> invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AParserError {
+  private ABinaryFilterExpression<?, ?> invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AParserError {
     return precedenceLadder[0].apply(tokenizer, 0);
   }
 
-  private ABinaryExpression<?, ?> invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
+  private ABinaryFilterExpression<?, ?> invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AParserError {
     return precedenceLadder[precedenceSelf + 1].apply(tokenizer, precedenceSelf + 1);
   }
 
-  private ABinaryExpression<?, ?> parseBinaryExpression(
+  private ABinaryFilterExpression<?, ?> parseBinaryExpression(
     FBinaryExpressionWrapper wrapper, ITokenizer tokenizer,
     int precedenceSelf, TokenType operator
   ) throws AParserError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a binary expression for the operator " + operator);
 
-    ABinaryExpression<?, ?> lhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
+    ABinaryFilterExpression<?, ?> lhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
     Token tk, head = lhs.getHead();
 
     while ((tk = tokenizer.peekToken()) != null && tk.getType() == operator) {
@@ -239,7 +239,7 @@ public class Parser {
 
       logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a rhs for this operation");
 
-      ABinaryExpression<?, ?> rhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
+      ABinaryFilterExpression<?, ?> rhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
 
       lhs = wrapper.apply(lhs, rhs, head, rhs.getTail(), tk);
     }

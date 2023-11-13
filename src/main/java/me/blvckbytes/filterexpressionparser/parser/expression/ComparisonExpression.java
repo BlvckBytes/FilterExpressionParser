@@ -29,7 +29,7 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 import me.blvckbytes.filterexpressionparser.tokenizer.TokenType;
 import org.jetbrains.annotations.Nullable;
 
-public class ComparisonExpression extends ABinaryExpression<IdentifierExpression, TerminalExpression<?>> {
+public class ComparisonExpression extends ABinaryFilterExpression<IdentifierExpression, TerminalExpression<?>> {
 
   private final ComparisonOperator operation;
 

@@ -24,7 +24,7 @@
 
 package me.blvckbytes.filterexpressionparser.parser;
 
-import me.blvckbytes.filterexpressionparser.parser.expression.ABinaryExpression;
+import me.blvckbytes.filterexpressionparser.parser.expression.ABinaryFilterExpression;
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
 @FunctionalInterface
@@ -32,6 +32,6 @@ public interface FBinaryExpressionWrapper {
 
   // NOTE: LHS and RHS can only be either a Comparison-, Disjunction- or
   //       ConjunctionExpression and thus only of type ABinaryExpression
-  ABinaryExpression<?, ?> apply(ABinaryExpression<?, ?> lhs, ABinaryExpression<?, ?> rhs, Token head, Token tail, Token operator);
+  ABinaryFilterExpression<?, ?> apply(ABinaryFilterExpression<?, ?> lhs, ABinaryFilterExpression<?, ?> rhs, Token head, Token tail, Token operator);
 
 }

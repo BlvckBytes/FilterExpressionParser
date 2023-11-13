@@ -28,12 +28,12 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 import me.blvckbytes.filterexpressionparser.tokenizer.TokenType;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ABinaryExpression<LHSType extends AExpression, RHSType extends AExpression> extends AExpression {
+public abstract class ABinaryFilterExpression<LHSType extends AExpression, RHSType extends AExpression> extends AExpression {
 
   protected LHSType lhs;
   protected RHSType rhs;
 
-  public ABinaryExpression(LHSType lhs, RHSType rhs, Token head, Token tail, String fullContainingExpression) {
+  public ABinaryFilterExpression(LHSType lhs, RHSType rhs, Token head, Token tail, String fullContainingExpression) {
     super(head, tail, fullContainingExpression);
 
     this.lhs = lhs;

@@ -13,7 +13,7 @@ public abstract class TestsBase {
   private static final Logger LOGGER = Logger.getGlobal();
   private static final Parser PARSER = new Parser(LOGGER);
 
-  public void validate(String input, ABinaryExpression<?, ?> expectedExpression) {
+  public void validate(String input, ABinaryFilterExpression<?, ?> expectedExpression) {
     compareExpressions(PARSER.parse(new Tokenizer(LOGGER, input)), expectedExpression);
   }
 
@@ -49,9 +49,9 @@ public abstract class TestsBase {
       return;
     }
 
-    if (expected instanceof ABinaryExpression<?, ?>) {
-      compareExpressions(((ABinaryExpression<?, ?>) actual).getLhs(), ((ABinaryExpression<?, ?>) expected).getLhs());
-      compareExpressions(((ABinaryExpression<?, ?>) actual).getRhs(), ((ABinaryExpression<?, ?>) expected).getRhs());
+    if (expected instanceof ABinaryFilterExpression<?, ?>) {
+      compareExpressions(((ABinaryFilterExpression<?, ?>) actual).getLhs(), ((ABinaryFilterExpression<?, ?>) expected).getLhs());
+      compareExpressions(((ABinaryFilterExpression<?, ?>) actual).getRhs(), ((ABinaryFilterExpression<?, ?>) expected).getRhs());
     }
   }
 
@@ -67,11 +67,11 @@ public abstract class TestsBase {
     return new IdentifierExpression(identifier, null, null, null);
   }
 
-  protected ConjunctionExpression conjunction(ABinaryExpression<?, ?> lhs, ABinaryExpression<?, ?> rhs) {
+  protected ConjunctionExpression conjunction(ABinaryFilterExpression<?, ?> lhs, ABinaryFilterExpression<?, ?> rhs) {
     return new ConjunctionExpression(lhs, rhs, null, null, null);
   }
 
-  protected DisjunctionExpression disjunction(ABinaryExpression<?, ?> lhs, ABinaryExpression<?, ?> rhs) {
+  protected DisjunctionExpression disjunction(ABinaryFilterExpression<?, ?> lhs, ABinaryFilterExpression<?, ?> rhs) {
     return new DisjunctionExpression(lhs, rhs, null, null, null);
   }
 

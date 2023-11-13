@@ -25,12 +25,12 @@
 package me.blvckbytes.filterexpressionparser.parser;
 
 import me.blvckbytes.filterexpressionparser.error.AParserError;
-import me.blvckbytes.filterexpressionparser.parser.expression.ABinaryExpression;
+import me.blvckbytes.filterexpressionparser.parser.expression.ABinaryFilterExpression;
 import me.blvckbytes.filterexpressionparser.tokenizer.ITokenizer;
 
 @FunctionalInterface
 public interface FExpressionParser {
 
-  ABinaryExpression<?, ?> apply(ITokenizer tokenizer, int selfPrecedence) throws AParserError;
+  ABinaryFilterExpression<?, ?> apply(ITokenizer tokenizer, int selfPrecedence) throws AParserError;
 
 }
