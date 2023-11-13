@@ -30,32 +30,14 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 public class LiteralExpression extends AExpression {
 
   private final LiteralType type;
-  private final Object value;
 
   public LiteralExpression(LiteralType type, Token head, Token tail, String fullContainingExpression) {
     super(head, tail, fullContainingExpression);
-
     this.type = type;
-
-    switch (type) {
-      case NULL:
-        this.value = null;
-        break;
-
-      default:
-      case TRUE:
-      case FALSE:
-        this.value = type == LiteralType.TRUE;
-        break;
-    }
   }
 
   public LiteralType getType() {
     return type;
-  }
-
-  public Object getValue() {
-    return value;
   }
 
   @Override
