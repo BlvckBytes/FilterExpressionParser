@@ -29,11 +29,11 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 import me.blvckbytes.filterexpressionparser.tokenizer.TokenType;
 import org.jetbrains.annotations.Nullable;
 
-public class ComparisonExpression extends ABinaryExpression {
+public class ComparisonExpression extends ABinaryExpression<IdentifierExpression, TerminalExpression<?>> {
 
   private final ComparisonOperator operation;
 
-  public ComparisonExpression(AExpression lhs, AExpression rhs, ComparisonOperator operation, Token head, Token tail, String fullContainingExpression) {
+  public ComparisonExpression(IdentifierExpression lhs, TerminalExpression<?> rhs, ComparisonOperator operation, Token head, Token tail, String fullContainingExpression) {
     super(lhs, rhs, head, tail, fullContainingExpression);
     this.operation = operation;
   }

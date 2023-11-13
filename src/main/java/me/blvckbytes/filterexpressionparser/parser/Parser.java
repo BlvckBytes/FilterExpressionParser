@@ -52,7 +52,7 @@ public class Parser {
     };
   }
 
-  public AExpression parse(ITokenizer tokenizer) throws AEvaluatorError {
+  public ABinaryExpression<?, ?> parse(ITokenizer tokenizer) throws AEvaluatorError {
     return invokeLowestPrecedenceParser(tokenizer);
   }
 
@@ -62,7 +62,7 @@ public class Parser {
 
   /////////////////////// Unary Expressions ///////////////////////
 
-  private AExpression parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseParenthesisExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a parenthesis expression");
 
     Token tk = tokenizer.peekToken();
@@ -77,7 +77,7 @@ public class Parser {
 
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse the content of the parenthesis expression");
 
-    AExpression content = invokeLowestPrecedenceParser(tokenizer);
+    ABinaryExpression<?, ?> content = invokeLowestPrecedenceParser(tokenizer);
 
     // Parenthesis has to be closed again
     if ((tk = tokenizer.consumeToken()) == null || tk.getType() != TokenType.PARENTHESIS_CLOSE)
@@ -88,14 +88,14 @@ public class Parser {
 
   /////////////////////// Binary Expressions ///////////////////////
 
-  private AExpression parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseDisjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new DisjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_OR
     );
   }
 
-  private AExpression parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> parseConjunctionExpression(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
     return parseBinaryExpression(
       (lhs, rhs, h, t, op) -> new ConjunctionExpression(lhs, rhs, h, t, tokenizer.getRawText()),
       tokenizer, precedenceSelf, TokenType.BOOL_AND
@@ -212,21 +212,21 @@ public class Parser {
   //                                Utilities                                //
   //=========================================================================//
 
-  private AExpression invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> invokeLowestPrecedenceParser(ITokenizer tokenizer) throws AEvaluatorError {
     return precedenceLadder[0].apply(tokenizer, 0);
   }
 
-  private AExpression invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
+  private ABinaryExpression<?, ?> invokeNextPrecedenceParser(ITokenizer tokenizer, int precedenceSelf) throws AEvaluatorError {
     return precedenceLadder[precedenceSelf + 1].apply(tokenizer, precedenceSelf + 1);
   }
 
-  private AExpression parseBinaryExpression(
+  private ABinaryExpression<?, ?> parseBinaryExpression(
     FBinaryExpressionWrapper wrapper, ITokenizer tokenizer,
     int precedenceSelf, TokenType operator
   ) throws AEvaluatorError {
     logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a binary expression for the operator " + operator);
 
-    AExpression lhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
+    ABinaryExpression<?, ?> lhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
     Token tk, head = lhs.getHead();
 
     while ((tk = tokenizer.peekToken()) != null && tk.getType() == operator) {
@@ -235,7 +235,7 @@ public class Parser {
 
       logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Trying to parse a rhs for this operation");
 
-      AExpression rhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
+      ABinaryExpression<?, ?> rhs = invokeNextPrecedenceParser(tokenizer, precedenceSelf);
 
       lhs = wrapper.apply(lhs, rhs, head, rhs.getTail(), tk);
     }

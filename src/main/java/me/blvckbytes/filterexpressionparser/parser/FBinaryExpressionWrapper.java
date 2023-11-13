@@ -24,12 +24,14 @@
 
 package me.blvckbytes.filterexpressionparser.parser;
 
-import me.blvckbytes.filterexpressionparser.parser.expression.AExpression;
+import me.blvckbytes.filterexpressionparser.parser.expression.ABinaryExpression;
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
 @FunctionalInterface
 public interface FBinaryExpressionWrapper {
 
-  AExpression apply(AExpression lhs, AExpression rhs, Token head, Token tail, Token operator);
+  // NOTE: LHS and RHS can only be either a Comparison-, Disjunction- or
+  //       ConjunctionExpression and thus only of type ABinaryExpression
+  ABinaryExpression<?, ?> apply(ABinaryExpression<?, ?> lhs, ABinaryExpression<?, ?> rhs, Token head, Token tail, Token operator);
 
 }
