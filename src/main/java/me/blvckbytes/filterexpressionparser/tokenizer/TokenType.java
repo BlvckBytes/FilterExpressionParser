@@ -178,8 +178,8 @@ public enum TokenType {
   CONTAINS_EXACT(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '%', '%')),
   CONTAINS_FUZZY(TokenCategory.OPERATOR, "%%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "%%".toCharArray())),
 
-  BOOL_OR(TokenCategory.KEYWORD, "||", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "||".toCharArray())),
-  BOOL_AND(TokenCategory.KEYWORD, "&&", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "&&".toCharArray())),
+  BOOL_OR(TokenCategory.JUNCTION, "||", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "||".toCharArray())),
+  BOOL_AND(TokenCategory.JUNCTION, "&&", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "&&".toCharArray())),
 
   //=========================================================================//
   //                                 Symbols                                 //

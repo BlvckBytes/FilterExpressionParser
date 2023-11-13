@@ -31,14 +31,7 @@ package me.blvckbytes.filterexpressionparser.tokenizer;
  * keyword (which would be illegal).
  */
 public enum TokenCategory {
-  // Literals and keywords share the same importance, as
-  // they should never collide by design
-  LITERAL, KEYWORD,
-
-  // Values include identifiers, so they're definitely after reserved words
+  LITERAL,
   VALUE,
-
-  // Operators and symbols share the same importance, as
-  // they should never collide by design
-  OPERATOR, SYMBOL,
+  OPERATOR, SYMBOL, JUNCTION,
 }
