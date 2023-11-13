@@ -26,6 +26,9 @@ package me.blvckbytes.gpeee.parser;
 
 public enum ComparisonOperation {
 
+  EQUAL,
+  NOT_EQUAL,
+  REGEX_MATCHER,
   GREATER_THAN,
   GREATER_THAN_OR_EQUAL,
   LESS_THAN,

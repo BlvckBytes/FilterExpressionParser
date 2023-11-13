@@ -165,48 +165,23 @@ public enum TokenType {
   //                                Operators                                //
   //=========================================================================//
 
-  EXPONENT(TokenCategory.OPERATOR, "^", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '^')),
-  MULTIPLICATION(TokenCategory.OPERATOR, "*", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '*')),
-  DIVISION(TokenCategory.OPERATOR, "/", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '/')),
-  MODULO(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '%')),
-  PLUS(TokenCategory.OPERATOR, "+", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '+')),
-  MINUS(TokenCategory.OPERATOR, "-", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '>', '-')),
-
   GREATER_THAN(TokenCategory.OPERATOR, ">", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '>')),
   GREATER_THAN_OR_EQUAL(TokenCategory.OPERATOR, ">=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '>', '=')),
   LESS_THAN(TokenCategory.OPERATOR, "<", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '<')),
   LESS_THAN_OR_EQUAL(TokenCategory.OPERATOR, "<=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '<', '=')),
   VALUE_EQUALS(TokenCategory.OPERATOR, "==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '=', '=')),
   VALUE_NOT_EQUALS(TokenCategory.OPERATOR, "!=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '!', '=')),
-  VALUE_EQUALS_EXACT(TokenCategory.OPERATOR, "===", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '=', '=', '=')),
-  VALUE_NOT_EQUALS_EXACT(TokenCategory.OPERATOR, "!==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '!', '=', '=')),
+  REGEX_MATCHER(TokenCategory.OPERATOR, "regex", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "regex".toCharArray())),
 
-  CONCATENATE(TokenCategory.OPERATOR, "&", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '&')),
-
-  BOOL_NOT(TokenCategory.KEYWORD, "not", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "not".toCharArray())),
-  BOOL_AND(TokenCategory.KEYWORD, "and", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "and".toCharArray())),
   BOOL_OR(TokenCategory.KEYWORD, "or", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "or".toCharArray())),
-  KW_IF(TokenCategory.KEYWORD, "if", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "if".toCharArray())),
-  KW_THEN(TokenCategory.KEYWORD, "then", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "then".toCharArray())),
-  KW_ELSE(TokenCategory.KEYWORD, "else", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "else".toCharArray())),
-
-  ARROW(TokenCategory.OPERATOR, "=>", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "=>".toCharArray())),
-  ASSIGN(TokenCategory.OPERATOR, "=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '=')),
-  NULL_COALESCE(TokenCategory.OPERATOR, "??", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "??".toCharArray())),
+  BOOL_AND(TokenCategory.KEYWORD, "and", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "and".toCharArray())),
 
   //=========================================================================//
   //                                 Symbols                                 //
   //=========================================================================//
 
   PARENTHESIS_OPEN(TokenCategory.SYMBOL, "(", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '(')),
-  OPTIONAL_PARENTHESIS_OPEN(TokenCategory.SYMBOL, "?(", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?', '(')),
   PARENTHESIS_CLOSE(TokenCategory.SYMBOL, ")", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, ')')),
-  COMMA(TokenCategory.SYMBOL, ",", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, ',')),
-  DOT(TokenCategory.SYMBOL, ".", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, TokenType::isDigit, '.')),
-  OPTIONAL_DOT(TokenCategory.SYMBOL, "?.", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, TokenType::isDigit, '?', '.')),
-  BRACKET_OPEN(TokenCategory.SYMBOL, "[", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '[')),
-  OPTIONAL_BRACKET_OPEN(TokenCategory.SYMBOL, "?[", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?', '[')),
-  BRACKET_CLOSE(TokenCategory.SYMBOL, "]", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, ']')),
 
   ;
 

@@ -26,9 +26,7 @@ package me.blvckbytes.gpeee.logging;
 
 public enum DebugLogSource {
   TOKENIZER,
-  PARSER,
-  INTERPRETER,
-  OPTIMIZER
+  PARSER
   ;
 
   @Override

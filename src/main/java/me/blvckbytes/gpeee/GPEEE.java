@@ -25,130 +25,24 @@
 package me.blvckbytes.gpeee;
 
 import me.blvckbytes.gpeee.error.AEvaluatorError;
-import me.blvckbytes.gpeee.functions.AExpressionFunction;
-import me.blvckbytes.gpeee.functions.IStandardFunctionRegistry;
-import me.blvckbytes.gpeee.functions.std.*;
-import me.blvckbytes.gpeee.interpreter.*;
-import me.blvckbytes.gpeee.parser.Optimizer;
 import me.blvckbytes.gpeee.parser.Parser;
 import me.blvckbytes.gpeee.parser.expression.AExpression;
 import me.blvckbytes.gpeee.tokenizer.Tokenizer;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-public class GPEEE implements IExpressionEvaluator, IStandardFunctionRegistry {
-
-  public static final IValueInterpreter STD_VALUE_INTERPRETER;
-  public static final IEvaluationEnvironment EMPTY_ENVIRONMENT;
-
-  static {
-    STD_VALUE_INTERPRETER = new StandardValueInterpreter();
-    EMPTY_ENVIRONMENT = createEmptyEnvironment();
-  }
-
-  private final Map<String, AStandardFunction> standardFunctions;
+public class GPEEE implements IExpressionEvaluator {
 
   private final Parser parser;
-  private final Interpreter interpreter;
-  private final Optimizer optimizer;
   private final Logger logger;
-
-  private EvaluationEnvironmentBuilder baseEnvironment;
 
   public GPEEE(Logger logger) {
     this.logger = logger;
     this.parser = new Parser(this.logger);
-    this.interpreter = new Interpreter(this.logger, this);
-    this.optimizer = new Optimizer(this.logger, this.interpreter, this);
-
-    this.standardFunctions = new HashMap<>();
-
-    this.loadStandardFunctions();
-  }
-
-  public void setBaseEnvironment(EvaluationEnvironmentBuilder baseEnvironment) {
-    this.baseEnvironment = baseEnvironment;
   }
 
   @Override
   public AExpression parseString(String input) throws AEvaluatorError {
     return parser.parse(new Tokenizer(this.logger, input));
-  }
-
-  @Override
-  public AExpression optimizeExpression(AExpression expression) throws AEvaluatorError {
-    return optimizer.optimizeAST(expression);
-  }
-
-  @Override
-  public Object evaluateExpression(AExpression expression, IEvaluationEnvironment environment) throws AEvaluatorError {
-    if (this.baseEnvironment != null)
-      environment = baseEnvironment.build(environment);
-    return interpreter.evaluateExpression(expression, environment);
-  }
-
-  @Override
-  public void register(String name, AStandardFunction function) {
-    this.standardFunctions.put(name, function);
-  }
-
-  @Override
-  public @Nullable AStandardFunction lookup(String name) {
-    return this.standardFunctions.get(name);
-  }
-
-  /**
-   * Loads all locally available standard functions into the local registry
-   */
-  private void loadStandardFunctions() {
-    new IterCatFunction().registerSelf(this);
-    new StrFunction().registerSelf(this);
-    new KeyFunction().registerSelf(this);
-    new ValueFunction().registerSelf(this);
-    new BoolFunction().registerSelf(this);
-    new ListFunction().registerSelf(this);
-    new LenFunction().registerSelf(this);
-    new ListOfFunction().registerSelf(this);
-    new MapOfFunction().registerSelf(this);
-    new SplitFunction().registerSelf(this);
-    new PrintFunction().registerSelf(this);
-    new TitleCaseFunction().registerSelf(this);
-    new MapFunction().registerSelf(this);
-    new DateFormatFunction().registerSelf(this);
-    new LIndexFunction().registerSelf(this);
-    new RIndexFunction().registerSelf(this);
-    new SubstringFunction().registerSelf(this);
-    new RangeFunction().registerSelf(this);
-    new FlattenFunction().registerSelf(this);
-    new MinFunction().registerSelf(this);
-    new MaxFunction().registerSelf(this);
-  }
-
-  private static IEvaluationEnvironment createEmptyEnvironment() {
-    return new IEvaluationEnvironment() {
-      @Override
-      public Map<String, AExpressionFunction> getFunctions() {
-        return new HashMap<>();
-      }
-
-      @Override
-      public Map<String, Supplier<?>> getLiveVariables() {
-        return new HashMap<>();
-      }
-
-      @Override
-      public Map<String, ?> getStaticVariables() {
-        return new HashMap<>();
-      }
-
-      @Override
-      public IValueInterpreter getValueInterpreter() {
-        return STD_VALUE_INTERPRETER;
-      }
-    };
   }
 }

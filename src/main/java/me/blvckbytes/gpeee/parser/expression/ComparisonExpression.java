@@ -53,6 +53,12 @@ public class ComparisonExpression extends ABinaryExpression {
   @Override
   protected @Nullable String getInfixSymbol() {
     switch (operation) {
+      case EQUAL:
+        return TokenType.VALUE_EQUALS.getRepresentation();
+      case NOT_EQUAL:
+        return TokenType.VALUE_NOT_EQUALS.getRepresentation();
+      case REGEX_MATCHER:
+        return TokenType.REGEX_MATCHER.getRepresentation();
       case LESS_THAN:
         return TokenType.LESS_THAN.getRepresentation();
       case GREATER_THAN:

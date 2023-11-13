@@ -25,7 +25,6 @@
 package me.blvckbytes.gpeee;
 
 import me.blvckbytes.gpeee.error.AEvaluatorError;
-import me.blvckbytes.gpeee.interpreter.IEvaluationEnvironment;
 import me.blvckbytes.gpeee.parser.expression.AExpression;
 
 public interface IExpressionEvaluator {
@@ -38,22 +37,5 @@ public interface IExpressionEvaluator {
    * @throws AEvaluatorError Error during the parsing process
    */
   AExpression parseString(String input) throws AEvaluatorError;
-
-  /**
-   * Optimizes the provided expression by collapsing static expressions into their result.
-   * This only makes sense if the target expression is being evaluated more than once.
-   * @param expression Expression to optimize
-   * @return Optimized expression
-   * @throws AEvaluatorError Error during the evaluation process
-   */
-  AExpression optimizeExpression(AExpression expression) throws AEvaluatorError;
-
-  /**
-   * Evaluates a previously parsed expression within a provided evaluation environment.
-   * @param expression Expression to evaluate
-   * @return Resulting expression value
-   * @throws AEvaluatorError Error during the interpretation process
-   */
-  Object evaluateExpression(AExpression expression, IEvaluationEnvironment environment) throws AEvaluatorError;
 
 }
