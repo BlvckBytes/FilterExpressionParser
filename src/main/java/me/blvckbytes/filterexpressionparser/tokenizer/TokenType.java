@@ -171,7 +171,10 @@ public enum TokenType {
   LESS_THAN_OR_EQUAL(TokenCategory.OPERATOR, "<=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '<', '=')),
   VALUE_EQUALS(TokenCategory.OPERATOR, "==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '=', '=')),
   VALUE_NOT_EQUALS(TokenCategory.OPERATOR, "!=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '!', '=')),
-  REGEX_MATCHER(TokenCategory.OPERATOR, "regex", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "regex".toCharArray())),
+
+  // While the reserved keyword "regex" would "look nicer", having a symbol that does not restrict
+  // the identifier values is to be preferred, as fields like "regex" could actually be quite common
+  REGEX_MATCHER(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '%')),
 
   BOOL_OR(TokenCategory.KEYWORD, "or", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "or".toCharArray())),
   BOOL_AND(TokenCategory.KEYWORD, "and", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "and".toCharArray())),
