@@ -36,6 +36,13 @@ Not only will there be less used characters in total, but the readability also s
 This parser adds a few dozens of **micro**-seconds to the request processing duration and is thus
 a compromise who's necessity is to be decided by nobody but the reader, of course.
 
+Another advantage of this library that's worth mentioning has to do with value typing, which allows for unambiguous queries and entity field type validation. It is precisely known whether the value of a comparison expression is either null, a boolean, a string, a long, a double or an identifier, referencing another entity field. Nonsensical requests can be reported back to the user without the need to dispatch them and either error out or produce unlogical behavior. These values are called [TerminalExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/TerminalExpression.java)s and can be one of the following concrete types:
+- [LiteralExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/LiteralExpression.java)
+- [StringExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/StringExpression.java)
+- [LongExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/LongExpression.java)
+- [DoubleExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/DoubleExpression.java)
+- [IdentifierExpression](src/main/java/me/blvckbytes/filterexpressionparser/parser/expression/IdentifierExpression.java)
+
 ## Usage
 
 Parsing an input string is quite straight-forward:
