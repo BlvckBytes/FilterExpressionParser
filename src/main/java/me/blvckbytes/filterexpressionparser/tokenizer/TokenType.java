@@ -165,9 +165,9 @@ public enum TokenType {
   //                                Operators                                //
   //=========================================================================//
 
-  GREATER_THAN(TokenCategory.OPERATOR, ">", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '>')),
+  GREATER_THAN(TokenCategory.OPERATOR, ">", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=' || c == '%', '>')),
   GREATER_THAN_OR_EQUAL(TokenCategory.OPERATOR, ">=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '>', '=')),
-  LESS_THAN(TokenCategory.OPERATOR, "<", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=', '<')),
+  LESS_THAN(TokenCategory.OPERATOR, "<", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '=' || c == '%', '<')),
   LESS_THAN_OR_EQUAL(TokenCategory.OPERATOR, "<=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '<', '=')),
   VALUE_EQUALS(TokenCategory.OPERATOR, "==", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "==".toCharArray())),
   VALUE_NOT_EQUALS(TokenCategory.OPERATOR, "!=", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "!=".toCharArray())),
@@ -175,6 +175,8 @@ public enum TokenType {
   // While the reserved keyword "regex" would "look nicer", having a symbol that does not restrict
   // the identifier values is to be preferred, as fields like "regex" could actually be quite common
   REGEX_MATCHER(TokenCategory.OPERATOR, "?", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?')),
+  STARTS_WITH(TokenCategory.OPERATOR, ">%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, ">%".toCharArray())),
+  ENDS_WITH(TokenCategory.OPERATOR, "<%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "<%".toCharArray())),
   CONTAINS(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '%', '%')),
   CONTAINS_FUZZY(TokenCategory.OPERATOR, "%%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "%%".toCharArray())),
 

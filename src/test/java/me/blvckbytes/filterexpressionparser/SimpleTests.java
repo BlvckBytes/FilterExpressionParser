@@ -91,5 +91,19 @@ public class SimpleTests extends TestsBase {
         )
       )
     );
+
+    validate(
+      "(name>%\"User\"||age>=50)&&(color==\"green\"||height<%weight)",
+      conjunction(
+        disjunction(
+          comparison("name", ComparisonOperator.STARTS_WITH, stringValue("User")),
+          comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
+        ),
+        disjunction(
+          comparison("color", ComparisonOperator.EQUAL, stringValue("green")),
+          comparison("height", ComparisonOperator.ENDS_WITH, identifier("weight"))
+        )
+      )
+    );
   }
 }

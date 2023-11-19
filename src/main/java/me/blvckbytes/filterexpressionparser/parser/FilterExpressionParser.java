@@ -137,6 +137,14 @@ public class FilterExpressionParser {
         operator = ComparisonOperator.CONTAINS;
         break;
 
+      case STARTS_WITH:
+        operator = ComparisonOperator.STARTS_WITH;
+        break;
+
+      case ENDS_WITH:
+        operator = ComparisonOperator.ENDS_WITH;
+        break;
+
       case CONTAINS_FUZZY:
         operator = ComparisonOperator.CONTAINS_FUZZY;
         break;
