@@ -175,7 +175,7 @@ public enum TokenType {
   // While the reserved keyword "regex" would "look nicer", having a symbol that does not restrict
   // the identifier values is to be preferred, as fields like "regex" could actually be quite common
   REGEX_MATCHER(TokenCategory.OPERATOR, "?", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, '?')),
-  CONTAINS_EXACT(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '%', '%')),
+  CONTAINS(TokenCategory.OPERATOR, "%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, c -> c == '%', '%')),
   CONTAINS_FUZZY(TokenCategory.OPERATOR, "%%", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "%%".toCharArray())),
 
   BOOL_OR(TokenCategory.JUNCTION, "||", tokenizer -> tryCollectSequenceWithNextCheck(tokenizer, null, "||".toCharArray())),

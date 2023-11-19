@@ -51,8 +51,8 @@ public class ComparisonExpression extends ABinaryFilterExpression<IdentifierExpr
         return TokenType.VALUE_NOT_EQUALS.getRepresentation();
       case REGEX_MATCHER:
         return TokenType.REGEX_MATCHER.getRepresentation();
-      case CONTAINS_EXACT:
-        return TokenType.CONTAINS_EXACT.getRepresentation();
+      case CONTAINS:
+        return TokenType.CONTAINS.getRepresentation();
       case CONTAINS_FUZZY:
         return TokenType.CONTAINS_FUZZY.getRepresentation();
       case LESS_THAN:
