@@ -92,17 +92,19 @@ Value := Long
        | Identifier # Fields can be matched on other fields within
                     # the same object as well, not just static values
 
-ComparisonOperator ::= ">"  # Greater than
-                     | "<"  # Less than
-                     | ">=" # Greater than or equal
-                     | "<=" # Less than or equal
-                     | "==" # Equals
-                     | "!=" # Not Equals
-                     | "?"  # Regex match
-                     | ">%" # Starts with
-                     | "<%" # Ends with
-                     | "%"  # Contains
-                     | "%%" # Contains fuzzy
+ComparisonOperator ::= ">"   # Greater than
+                     | "<"   # Less than
+                     | ">="  # Greater than or equal
+                     | "<="  # Less than or equal
+                     | "=="  # Equals
+                     | "===" # Equals sensitively
+                     | "!="  # Not Equals
+                     | "!==" # Not Equals sensitively
+                     | "?"   # Regex match
+                     | ">%"  # Starts with
+                     | "<%"  # Ends with
+                     | "%"   # Contains
+                     | "%%"  # Contains fuzzy
 
 DisjunctionExpression ::= ConjunctionExpression ("||" ConjunctionExpression)*
 ConjunctionExpression ::= ParenthesesExpression ("&&" ParenthesesExpression)*

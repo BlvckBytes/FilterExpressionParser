@@ -32,8 +32,8 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldParseComparison() {
     validate(
-      "name == \"User\"",
-      comparison("name", ComparisonOperator.EQUAL, stringValue("User"))
+      "name != \"User\"",
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User"))
     );
   }
 
@@ -79,15 +79,15 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleParenthesesAndMinification() {
     validate(
-      "(name%%\"User\"||age>=50)&&(color==\"green\"||height!=weight)",
+      "(name%%\"User\"||age>=50)&&(color!==\"green\"||height===weight)",
       conjunction(
         disjunction(
           comparison("name", ComparisonOperator.CONTAINS_FUZZY, stringValue("User")),
           comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
         ),
         disjunction(
-          comparison("color", ComparisonOperator.EQUAL, stringValue("green")),
-          comparison("height", ComparisonOperator.NOT_EQUAL, identifier("weight"))
+          comparison("color", ComparisonOperator.NOT_EQUAL_SENSITIVE, stringValue("green")),
+          comparison("height", ComparisonOperator.EQUAL_SENSITIVE, identifier("weight"))
         )
       )
     );

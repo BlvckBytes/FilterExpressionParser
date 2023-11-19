@@ -125,8 +125,16 @@ public class FilterExpressionParser {
         operator = ComparisonOperator.EQUAL;
         break;
 
+      case VALUE_EQUALS_SENSITIVE:
+        operator = ComparisonOperator.EQUAL_SENSITIVE;
+        break;
+
       case VALUE_NOT_EQUALS:
         operator = ComparisonOperator.NOT_EQUAL;
+        break;
+
+      case VALUE_NOT_EQUALS_SENSITIVE:
+        operator = ComparisonOperator.NOT_EQUAL_SENSITIVE;
         break;
 
       case REGEX_MATCHER:
