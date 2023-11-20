@@ -27,6 +27,7 @@ ComparisonOperator ::= ">"   # Greater than
                      | "!="  # Not Equals
                      | "!==" # Not Equals sensitively
                      | "?"   # Regex match
+                     | "??"  # Regex match sensitively
                      | ">%"  # Starts with
                      | "<%"  # Ends with
                      | "%"   # Contains

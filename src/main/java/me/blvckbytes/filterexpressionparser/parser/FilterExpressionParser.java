@@ -137,6 +137,10 @@ public class FilterExpressionParser {
         operator = ComparisonOperator.NOT_EQUAL_SENSITIVE;
         break;
 
+      case REGEX_MATCHER_SENSITIVE:
+        operator = ComparisonOperator.REGEX_MATCHER_SENSITIVE;
+        break;
+
       case REGEX_MATCHER:
         operator = ComparisonOperator.REGEX_MATCHER;
         break;
