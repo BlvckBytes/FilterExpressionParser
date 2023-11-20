@@ -38,6 +38,14 @@ public class SimpleTests extends TestsBase {
   }
 
   @Test
+  public void shouldParseCaseInsensitivity() {
+    validate(
+      "name != \"User\"i",
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", false))
+    );
+  }
+
+  @Test
   public void shouldParseConjunction() {
     validate(
       "name == \"User\" && age <= 50",
@@ -79,15 +87,15 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleParenthesesAndMinification() {
     validate(
-      "(name%%\"User\"||age>=50)&&(color!==\"green\"||height===weight)",
+      "(name%%\"User\"||age>=50)&&(color!=\"green\"||height==weight)",
       conjunction(
         disjunction(
           comparison("name", ComparisonOperator.CONTAINS_FUZZY, stringValue("User")),
           comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
         ),
         disjunction(
-          comparison("color", ComparisonOperator.NOT_EQUAL_SENSITIVE, stringValue("green")),
-          comparison("height", ComparisonOperator.EQUAL_SENSITIVE, identifier("weight"))
+          comparison("color", ComparisonOperator.NOT_EQUAL, stringValue("green")),
+          comparison("height", ComparisonOperator.EQUAL, identifier("weight"))
         )
       )
     );
@@ -102,37 +110,6 @@ public class SimpleTests extends TestsBase {
         disjunction(
           comparison("color", ComparisonOperator.EQUAL, stringValue("green")),
           comparison("height", ComparisonOperator.ENDS_WITH, identifier("weight"))
-        )
-      )
-    );
-  }
-
-  @Test
-  public void shouldParseSimilarOperatorsProperly() {
-    validate(
-      "(name?\"User\"||age??50)&&(color%\"green\"||height%%weight)",
-      conjunction(
-        disjunction(
-          comparison("name", ComparisonOperator.REGEX_MATCHER, stringValue("User")),
-          comparison("age", ComparisonOperator.REGEX_MATCHER_SENSITIVE, longValue(50))
-        ),
-        disjunction(
-          comparison("color", ComparisonOperator.CONTAINS, stringValue("green")),
-          comparison("height", ComparisonOperator.CONTAINS_FUZZY, identifier("weight"))
-        )
-      )
-    );
-
-    validate(
-      "(name==\"User\"||age===50)&&(color!=\"green\"||height!==weight)",
-      conjunction(
-        disjunction(
-          comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
-          comparison("age", ComparisonOperator.EQUAL_SENSITIVE, longValue(50))
-        ),
-        disjunction(
-          comparison("color", ComparisonOperator.NOT_EQUAL, stringValue("green")),
-          comparison("height", ComparisonOperator.NOT_EQUAL_SENSITIVE, identifier("weight"))
         )
       )
     );

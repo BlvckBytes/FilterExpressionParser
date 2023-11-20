@@ -125,20 +125,8 @@ public class FilterExpressionParser {
         operator = ComparisonOperator.EQUAL;
         break;
 
-      case VALUE_EQUALS_SENSITIVE:
-        operator = ComparisonOperator.EQUAL_SENSITIVE;
-        break;
-
       case VALUE_NOT_EQUALS:
         operator = ComparisonOperator.NOT_EQUAL;
-        break;
-
-      case VALUE_NOT_EQUALS_SENSITIVE:
-        operator = ComparisonOperator.NOT_EQUAL_SENSITIVE;
-        break;
-
-      case REGEX_MATCHER_SENSITIVE:
-        operator = ComparisonOperator.REGEX_MATCHER_SENSITIVE;
         break;
 
       case REGEX_MATCHER:
@@ -212,7 +200,22 @@ public class FilterExpressionParser {
 
       case STRING:
         logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Found a string");
-        return new StringExpression(tk.getValue(), tk, tk, tokenizer.getRawText());
+
+        String value = tk.getValue();
+        boolean caseSensitive = true;
+
+        // There is no case where an identifier would directly have to follow a string literal,
+        // which is why it is okay to "abuse" the special "i" here, to mark case invariance
+        if (
+          (tk = tokenizer.peekToken()) != null &&
+          tk.getType() == TokenType.IDENTIFIER &&
+          tk.getValue().equals("i")
+        ) {
+          tokenizer.consumeToken();
+          caseSensitive = false;
+        }
+
+        return new StringExpression(value, caseSensitive, tk, tk, tokenizer.getRawText());
 
       case IDENTIFIER: {
         logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Found an identifier");

@@ -80,7 +80,8 @@ Double ::= "-"? Digit* "." Digit+ ("e" "-"? Digit+)?
 Literal ::= "true" | "false" | "null"
 
 # Quotes within string literals need to be escaped
-String ::= '"' ('\"' | [^"])* '"'
+# A trailing i marks the string to be compared as case-insensitively
+String ::= '"' ('\"' | [^"])* '"' 'i'?
 
 # Identifiers represent fields to be filtered by
 Identifier ::= Letter (Digit | Letter | '_' | '.')*
@@ -97,11 +98,8 @@ ComparisonOperator ::= ">"   # Greater than
                      | ">="  # Greater than or equal
                      | "<="  # Less than or equal
                      | "=="  # Equals
-                     | "===" # Equals sensitively
                      | "!="  # Not Equals
-                     | "!==" # Not Equals sensitively
                      | "?"   # Regex match
-                     | "??"  # Regex match sensitively
                      | ">%"  # Starts with
                      | "<%"  # Ends with
                      | "%"   # Contains

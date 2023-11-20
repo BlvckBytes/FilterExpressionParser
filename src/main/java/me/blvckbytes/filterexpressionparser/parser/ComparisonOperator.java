@@ -27,11 +27,8 @@ package me.blvckbytes.filterexpressionparser.parser;
 public enum ComparisonOperator {
 
   EQUAL,
-  EQUAL_SENSITIVE,
   NOT_EQUAL,
-  NOT_EQUAL_SENSITIVE,
   REGEX_MATCHER,
-  REGEX_MATCHER_SENSITIVE,
   STARTS_WITH,
   ENDS_WITH,
   CONTAINS,

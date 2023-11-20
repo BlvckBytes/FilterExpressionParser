@@ -47,14 +47,8 @@ public class ComparisonExpression extends ABinaryFilterExpression<IdentifierExpr
     switch (operation) {
       case EQUAL:
         return TokenType.VALUE_EQUALS.getRepresentation();
-      case EQUAL_SENSITIVE:
-        return TokenType.VALUE_EQUALS_SENSITIVE.getRepresentation();
       case NOT_EQUAL:
         return TokenType.VALUE_NOT_EQUALS.getRepresentation();
-      case NOT_EQUAL_SENSITIVE:
-        return TokenType.VALUE_NOT_EQUALS_SENSITIVE.getRepresentation();
-      case REGEX_MATCHER_SENSITIVE:
-        return TokenType.REGEX_MATCHER_SENSITIVE.getRepresentation();
       case REGEX_MATCHER:
         return TokenType.REGEX_MATCHER.getRepresentation();
       case STARTS_WITH:

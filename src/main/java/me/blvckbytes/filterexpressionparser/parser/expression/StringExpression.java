@@ -29,14 +29,20 @@ import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 public class StringExpression extends TerminalExpression<String> {
 
   private final String value;
+  private final boolean caseSensitive;
 
-  public StringExpression(String value, Token head, Token tail, String fullContainingExpression) {
+  public StringExpression(String value, boolean caseSensitive, Token head, Token tail, String fullContainingExpression) {
     super(head, tail, fullContainingExpression);
     this.value = value;
+    this.caseSensitive = caseSensitive;
   }
 
   public String getValue() {
     return value;
+  }
+
+  public boolean isCaseSensitive() {
+    return caseSensitive;
   }
 
   @Override

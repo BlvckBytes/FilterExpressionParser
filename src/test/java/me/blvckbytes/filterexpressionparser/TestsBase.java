@@ -46,6 +46,15 @@ public abstract class TestsBase {
       if (!expectedTerminal.getValue().equals(actualTerminal.getValue()))
         throw new ValidationError(actualTerminal, "Expected terminal-value " + expectedTerminal.getValue() + " but found " + actualTerminal.getValue());
 
+      if (expectedTerminal instanceof StringExpression) {
+        StringExpression expectedString = (StringExpression) expectedTerminal;
+        StringExpression actualString = (StringExpression) actualTerminal;
+        boolean expectedSensitivity = expectedString.isCaseSensitive();
+
+        if (expectedSensitivity != actualString.isCaseSensitive())
+          throw new ValidationError(actualTerminal, "Expected case sensitivity " + expectedSensitivity + " but found " + (!expectedSensitivity));
+      }
+
       return;
     }
 
@@ -84,7 +93,11 @@ public abstract class TestsBase {
   }
 
   protected StringExpression stringValue(String value) {
-    return new StringExpression(value, null, null, null);
+    return stringValue(value, true);
+  }
+
+  protected StringExpression stringValue(String value, boolean caseSensitive) {
+    return new StringExpression(value, caseSensitive, null, null, null);
   }
 
   protected LiteralExpression nullLiteral() {
