@@ -22,40 +22,18 @@
  * SOFTWARE.
  */
 
-package me.blvckbytes.filterexpressionparser.parser.expression;
+package me.blvckbytes.filterexpressionparser.error;
 
+import me.blvckbytes.filterexpressionparser.tokenizer.ITokenizer;
 import me.blvckbytes.filterexpressionparser.tokenizer.Token;
 
-public class StringExpression extends TerminalExpression<String> {
+public class UnexpectedIdentifierAfterStringLiteralError extends AParserError {
 
-  private final String value;
-  private final boolean caseSensitive;
-  private final boolean trimTarget;
-
-  public StringExpression(
-    String value, boolean caseSensitive, boolean trimTarget,
-    Token head, Token tail, String fullContainingExpression
-  ) {
-    super(head, tail, fullContainingExpression);
-    this.value = value;
-    this.caseSensitive = caseSensitive;
-    this.trimTarget = trimTarget;
-  }
-
-  public String getValue() {
-    return value;
-  }
-
-  public boolean isCaseSensitive() {
-    return caseSensitive;
-  }
-
-  public boolean shouldTrimTarget() {
-    return trimTarget;
-  }
-
-  @Override
-  public String expressionify() {
-    return "\"" + value + "\"";
+  public UnexpectedIdentifierAfterStringLiteralError(ITokenizer tokenizer, Token token, String value) {
+    super(
+      token.getRow(), token.getCol(),
+      tokenizer.getRawText(),
+      "Unexpected identifier " + value + " after string literal, as only the following trailing flags are allowed: 'i' | 'it' | 'ti' | 't'"
+    );
   }
 }

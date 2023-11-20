@@ -49,10 +49,14 @@ public abstract class TestsBase {
       if (expectedTerminal instanceof StringExpression) {
         StringExpression expectedString = (StringExpression) expectedTerminal;
         StringExpression actualString = (StringExpression) actualTerminal;
-        boolean expectedSensitivity = expectedString.isCaseSensitive();
 
+        boolean expectedSensitivity = expectedString.isCaseSensitive();
         if (expectedSensitivity != actualString.isCaseSensitive())
           throw new ValidationError(actualTerminal, "Expected case sensitivity " + expectedSensitivity + " but found " + (!expectedSensitivity));
+
+        boolean expectedShouldTrim = expectedString.shouldTrimTarget();
+        if (expectedShouldTrim != actualString.shouldTrimTarget())
+          throw new ValidationError(actualTerminal, "Expected should-trim " + expectedShouldTrim + " but found " + (!expectedShouldTrim));
       }
 
       return;
@@ -93,11 +97,11 @@ public abstract class TestsBase {
   }
 
   protected StringExpression stringValue(String value) {
-    return stringValue(value, true);
+    return stringValue(value, true, false);
   }
 
-  protected StringExpression stringValue(String value, boolean caseSensitive) {
-    return new StringExpression(value, caseSensitive, null, null, null);
+  protected StringExpression stringValue(String value, boolean caseSensitive, boolean trimTarget) {
+    return new StringExpression(value, caseSensitive, trimTarget, null, null, null);
   }
 
   protected LiteralExpression nullLiteral() {

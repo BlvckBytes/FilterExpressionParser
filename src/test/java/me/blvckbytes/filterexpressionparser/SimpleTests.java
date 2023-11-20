@@ -24,8 +24,11 @@
 
 package me.blvckbytes.filterexpressionparser;
 
+import me.blvckbytes.filterexpressionparser.error.UnexpectedIdentifierAfterStringLiteralError;
 import me.blvckbytes.filterexpressionparser.parser.ComparisonOperator;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleTests extends TestsBase {
 
@@ -38,19 +41,41 @@ public class SimpleTests extends TestsBase {
   }
 
   @Test
-  public void shouldParseCaseInsensitivity() {
+  public void shouldParseCaseInsensitivityAndTrimming() {
     validate(
       "name != \"User\"i",
-      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", false))
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", false, false))
     );
+
+    validate(
+      "name != \"User\"t",
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", true, true))
+    );
+
+    validate(
+      "name != \"User\"it",
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", false, true))
+    );
+
+    validate(
+      "name != \"User\"ti",
+      comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User", false, true))
+    );
+
+    assertThrows(UnexpectedIdentifierAfterStringLiteralError.class, () -> {
+      validate(
+        "name != \"User\"a",
+        comparison("name", ComparisonOperator.NOT_EQUAL, stringValue("User"))
+      );
+    });
   }
 
   @Test
   public void shouldParseConjunction() {
     validate(
-      "name == \"User\" && age <= 50",
+      "name == \"User\"it && age <= 50",
       conjunction(
-        comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
+        comparison("name", ComparisonOperator.EQUAL, stringValue("User", false, true)),
         comparison("age", ComparisonOperator.LESS_THAN_OR_EQUAL, longValue(50))
       )
     );
@@ -59,10 +84,10 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldParseDisjunction() {
     validate(
-      "name == \"User\" || age >= 50",
+      "name == \"User\" || age >= 50.23",
       disjunction(
         comparison("name", ComparisonOperator.EQUAL, stringValue("User")),
-        comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
+        comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, doubleValue(50.23))
       )
     );
   }
@@ -87,10 +112,10 @@ public class SimpleTests extends TestsBase {
   @Test
   public void shouldHandleParenthesesAndMinification() {
     validate(
-      "(name%%\"User\"||age>=50)&&(color!=\"green\"||height==weight)",
+      "(name%%false||age>=50)&&(color!=\"green\"||height==weight)",
       conjunction(
         disjunction(
-          comparison("name", ComparisonOperator.CONTAINS_FUZZY, stringValue("User")),
+          comparison("name", ComparisonOperator.CONTAINS_FUZZY, falseLiteral()),
           comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
         ),
         disjunction(
@@ -101,14 +126,14 @@ public class SimpleTests extends TestsBase {
     );
 
     validate(
-      "(name>%\"User\"||age>=50)&&(color==\"green\"||height<%weight)",
+      "(name>%true||age>=50)&&(color==null||height<%weight)",
       conjunction(
         disjunction(
-          comparison("name", ComparisonOperator.STARTS_WITH, stringValue("User")),
+          comparison("name", ComparisonOperator.STARTS_WITH, trueLiteral()),
           comparison("age", ComparisonOperator.GREATER_THAN_OR_EQUAL, longValue(50))
         ),
         disjunction(
-          comparison("color", ComparisonOperator.EQUAL, stringValue("green")),
+          comparison("color", ComparisonOperator.EQUAL, nullLiteral()),
           comparison("height", ComparisonOperator.ENDS_WITH, identifier("weight"))
         )
       )

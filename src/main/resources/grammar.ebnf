@@ -7,7 +7,8 @@ Literal ::= "true" | "false" | "null"
 
 # Quotes within string literals need to be escaped
 # A trailing i marks the string to be compared as case-insensitively
-String ::= '"' ('\"' | [^"])* '"' 'i'?
+# A trailing t marks the target value to be trimmed before comparison
+String ::= '"' ('\"' | [^"])* '"' ('i' | 't' | 'it' | 'ti')?
 
 # Identifiers represent fields to be filtered by
 Identifier ::= Letter (Digit | Letter | '_' | '.')*

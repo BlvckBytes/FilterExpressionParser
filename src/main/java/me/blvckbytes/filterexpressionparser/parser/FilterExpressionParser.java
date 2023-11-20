@@ -24,6 +24,7 @@
 
 package me.blvckbytes.filterexpressionparser.parser;
 
+import me.blvckbytes.filterexpressionparser.error.UnexpectedIdentifierAfterStringLiteralError;
 import me.blvckbytes.filterexpressionparser.logging.DebugLogSource;
 import me.blvckbytes.filterexpressionparser.error.AParserError;
 import me.blvckbytes.filterexpressionparser.error.UnexpectedTokenError;
@@ -203,19 +204,33 @@ public class FilterExpressionParser {
 
         String value = tk.getValue();
         boolean caseSensitive = true;
+        boolean trimTarget = false;
 
         // There is no case where an identifier would directly have to follow a string literal,
         // which is why it is okay to "abuse" the special "i" here, to mark case invariance
-        if (
-          (tk = tokenizer.peekToken()) != null &&
-          tk.getType() == TokenType.IDENTIFIER &&
-          tk.getValue().equals("i")
-        ) {
+        if ((tk = tokenizer.peekToken()) != null && tk.getType() == TokenType.IDENTIFIER) {
+          String flagsValue = tk.getValue();
+
+          switch (flagsValue) {
+            case "i":
+              caseSensitive = false;
+              break;
+            case "it":
+            case "ti":
+              caseSensitive = false;
+              trimTarget = true;
+              break;
+            case "t":
+              trimTarget = true;
+              break;
+            default:
+              throw new UnexpectedIdentifierAfterStringLiteralError(tokenizer, tk, flagsValue);
+          }
+
           tokenizer.consumeToken();
-          caseSensitive = false;
         }
 
-        return new StringExpression(value, caseSensitive, tk, tk, tokenizer.getRawText());
+        return new StringExpression(value, caseSensitive, trimTarget, tk, tk, tokenizer.getRawText());
 
       case IDENTIFIER: {
         logger.log(Level.FINEST, () -> DebugLogSource.PARSER + "Found an identifier");
